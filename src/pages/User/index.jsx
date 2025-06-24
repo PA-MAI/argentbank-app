@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import '../../styles/css/accueil.css'
 function User() {
 
@@ -16,9 +17,11 @@ function User() {
             <p className="account-amount">$2,082.79</p>
             <p className="account-amount-description">Available Balance</p>
           </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
+          <Link to="/Transactions" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="account-content-wrapper cta">
+              <button className="transaction-button">View transactions</button>
+            </div>
+          </Link>
         </section>
         <section className="account">
           <div className="account-content-wrapper">
@@ -26,9 +29,11 @@ function User() {
             <p className="account-amount">$10,928.42</p>
             <p className="account-amount-description">Available Balance</p>
           </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
+          <Link to="/Transactions" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="account-content-wrapper cta">
+              <button className="transaction-button">View transactions</button>
+            </div>
+          </Link>
         </section>
         <section className="account">
           <div className="account-content-wrapper">
@@ -36,9 +41,11 @@ function User() {
             <p className="account-amount">$184.30</p>
             <p className="account-amount-description">Current Balance</p>
           </div>
-          <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
-          </div>
+          <Link to="/Transactions" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="account-content-wrapper cta">
+              <button className="transaction-button">View transactions</button>
+            </div>
+            </Link>
         </section>
       </main>
     </>

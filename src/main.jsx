@@ -8,6 +8,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import SignIn from './pages/Sign-in'
 import User from './pages/User'
+import Transactions from './pages/Transactions'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -15,8 +16,9 @@ createRoot(document.getElementById('root')).render(
       <Header />
         <Routes> 
           <Route path="/" element={<Accueil />} />
-          <Route path="/Sign-in" element={<SignIn />} />
-          <Route path="/User" element={<User/>} />
+          <Route path="/Login" element={<SignIn />} />
+        <Route path="/User" element={<User />} />
+        <Route path="/Transactions" element={<Transactions/>} />
         </Routes>
       <Footer />
     </BrowserRouter>

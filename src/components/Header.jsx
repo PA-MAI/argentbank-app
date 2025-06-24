@@ -16,7 +16,7 @@ function Header() {
                     </div>
                 </Link>
                 <div>
-                    <Link to="/Sign-in" style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Link to="/Login" style={{ textDecoration: 'none', color: 'inherit' }}>
                         <div className="main-nav-item"> {/*href = "./sign-in.html" */} 
                             <i className="fa fa-user-circle"></i>
                             Sign In

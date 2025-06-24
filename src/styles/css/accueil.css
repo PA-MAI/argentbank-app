@@ -14,11 +14,13 @@ body {
 }
 
 .main {
-  flex: 1;
+  display:flex;
+  min-height: 80vh;
 }
 
 .bg-dark {
   background-color: #12002b;
+  flex-direction: column;
 }
 
 .sr-only {
@@ -68,6 +70,9 @@ body {
 .main-nav-logo-image {
   max-width: 100%;
   width: 200px;
+}
+.fa-user-circle{
+  margin-right: 8px;
 }
 
 .hero {
@@ -172,6 +177,7 @@ body {
   margin: 0 auto;
   margin-top: 3rem;
   padding: 2rem;
+  height: 364px;
 }
 
 .sign-in-icon {
