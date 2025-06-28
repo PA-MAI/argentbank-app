@@ -1,65 +1,84 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Pour la navigation après connexion
-//import { authenticateUser } from '../../utils/Api';  // Import de la fonction API
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginUser, fetchUserProfile } from '../../utils/Auth'; 
 import '../../styles/css/accueil.css';
+import { useDispatch } from 'react-redux';
+
+import { setUser } from '../../Redux/userSlice';
+
+
 
 function SignIn() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();  // Utilisé pour rediriger après connexion
-  
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-          const response = await axios.post('http://localhost:3001/api/v1/user/login', {
-            email,
-            password,
-          });  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [rememberMe, setRememberMe] = useState(false);
 
-        
-            const { token } = response.data.body;
-            localStorage.setItem('token', token);
-      
-            console.log('Login successful:', token);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (rememberMe) {
+      localStorage.setItem('rememberEmail', email);
+      localStorage.setItem('rememberPassword', password);
+    } else {
+      localStorage.removeItem('rememberEmail');
+      localStorage.removeItem('rememberPassword');
+    }
+    try {
+      const data = await loginUser({ email, password });
+      const { token } = data.body;
   
-        // Redirige l'utilisateur vers la page de profil
-        navigate('/User');  
-      } catch (err) {
-        setError(err.response?.data?.message || 'Login failed');
-      }
-    };
+      // On va chercher les infos de l'utilisateur après login
+      const userDetails = await fetchUserProfile(token); // Tu créeras ça dans /api
   
-    return (
-        <main className="main bg-dark">
-        <section className="sign-in-content">
-          <h1>Sign In</h1>
-          <form onSubmit={handleLogin}>
-            <div className="input-wrapper">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="input-wrapper">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <button type="submit" className="sign-in-button">Sign In</button>
-            {error && <div className="error-message">{error}</div>}
-          </form>
-        </section>
-      </main>
-    );
-  }
+      const user = {
+        token,
+        firstName: userDetails.body.firstName,
+        lastName: userDetails.body.lastName,
+      };
   
-  export default SignIn;
+      dispatch(setUser(user));
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', token);
+  
+      navigate('/User');
+    } catch (err) {
+      setError(err.message || 'Login failed');
+    }
+  };
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('rememberEmail');
+    const savedPassword = localStorage.getItem('rememberPassword');
+    if (savedEmail) setEmail(savedEmail);
+    if (savedPassword) setPassword(savedPassword);
+  }, []);
+
+  return (
+    <main className="main bg-dark">
+      <section className="sign-in-content">
+        <h1>Sign In</h1>
+        <form onSubmit={handleLogin}>
+          <div className="input-wrapper">
+            <label htmlFor="email">Email</label>
+            <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div className="input-wrapper">
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <div className="input-remember">
+          <input type="checkbox" id="remember-me" checked={rememberMe}
+            onChange={() => setRememberMe(!rememberMe)}/>
+            <label htmlFor="remember-me">Remember me</label>
+          </div>
+          <button type="submit" className="sign-in-button">Sign In</button>
+          {error && <div className="error-message">{error}</div>}
+        </form>
+      </section>
+    </main>
+  );
+}
+
+export default SignIn;
