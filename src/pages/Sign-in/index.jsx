@@ -16,6 +16,7 @@ function SignIn() {
   const dispatch = useDispatch();
   const [rememberMe, setRememberMe] = useState(false);
 
+  // Fonction appelée à la soumission du formulaire
   const handleLogin = async (e) => {
     e.preventDefault();
     if (rememberMe) {
@@ -26,11 +27,12 @@ function SignIn() {
       localStorage.removeItem('rememberPassword');
     }
     try {
+      // Appel à la fonction loginUser de Auth.js
       const data = await loginUser({ email, password });
       const { token } = data.body;
   
       // On va chercher les infos de l'utilisateur après login
-      const userDetails = await fetchUserProfile(token); // Tu créeras ça dans /api
+      const userDetails = await fetchUserProfile(token); 
   
       const user = {
         token,

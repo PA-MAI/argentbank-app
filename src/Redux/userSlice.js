@@ -49,7 +49,10 @@ export const updateUserProfile = async (token, newData) => {
     } catch (error) {
       throw error.response?.data || { message: 'Profile update failed' };
     }
-  };
+};
+  
+
+
 // Export des actions pour les utiliser ailleurs (ex: Header, SignIn)
 export const { setUser, logout, updateUser } = userSlice.actions;
 

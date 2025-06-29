@@ -1,6 +1,6 @@
 
 
-// Ce fichier regroupe les appels liés à l'authentification (login, profil).
+// Ce fichier regroupe les appels liés à l'authentification (login, profil et l'update du profil).
 // Il utilise l'instance axios centralisée de `Api.jsx`.
 
 import api from '../utils/Api';// axios.create()
@@ -24,14 +24,20 @@ export const fetchUserProfile = async (token) => {
     throw error.response?.data || { message: 'Profile fetch failed' };
   }
 };
-
-export const updateUserProfile = async (token, newData) => {
+/**
+ * Fonction pour mettre à jour les informations de profil utilisateur
+ * @param {string} token - Le token d'authentification (peut être optionnel ici grâce à l'intercepteur)
+ * @param {string} firstName - Nouveau prénom
+ * @param {string} lastName - Nouveau nom
+ * @returns {Object} - Données mises à jour
+ */
+export const updateUserProfile = async (newData) => {
   try {
-    const response = await api.put('/user/profile', newData, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return response.data;
+    // Grâce à l’intercepteur, pas besoin de passer manuellement le token ici
+    const response = await api.put('/user/profile', newData);
+    return response.data.body;
   } catch (error) {
+    console.error('Échec de la mise à jour du profil', error);
     throw error.response?.data || { message: 'Profile update failed' };
   }
 };

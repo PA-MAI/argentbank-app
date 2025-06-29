@@ -1,14 +1,25 @@
 import axios from 'axios';
 
+/**
+ * Configuration de l'instance Axios personnalisée.
+ * On centralise ici :
+ * - l'URL de base
+ * - le timeout
+ * - les headers par défaut
+ */
 const api = axios.create({
-  baseURL: 'http://localhost:3001/api/v1',
+  baseURL: 'http://localhost:3001/api/v1', // À modifier si changement d'environnement
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Ajoute un intercepteur pour les tokens (si tu veux plus tard)
+/**
+ * Intercepteur de requêtes :
+ * Il intercepte toutes les requêtes sortantes et ajoute automatiquement
+ * le token d'authentification dans les headers si présent dans le localStorage.
+ */
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -18,3 +29,4 @@ api.interceptors.request.use((config) => {
 });
 
 export default api;
+

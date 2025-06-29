@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
 import '../../styles/css/accueil.css';
+import { updateUserProfile } from '../../utils/Auth'; // Fonction API PUT vers /user/profile
+import { updateUser } from '../../Redux/userSlice'; // Action Redux pour mettre à jour le store
 
 function User() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo);
+
    // État pour afficher ou non le formulaire d’édition
+   // État local des champs d'édition
    const [editMode, setEditMode] = useState(false);
 
-  
   // Si l'utilisateur n'est pas connecté, on le redirige vers la page d'accueil
   useEffect(() => {
     if (!user || !user.token) {
@@ -22,6 +26,23 @@ function User() {
  const [firstName, setFirstName] = useState(user?.firstName || '');
  const [lastName, setLastName] = useState(user?.lastName || '');
   
+  
+   // Fonction appelée au clic sur "Save"
+   const handleSave = async () => {
+    try {
+      const updated = await updateUserProfile({ firstName, lastName });
+      dispatch(updateUser(updated)); // Mise à jour du Redux Store
+      setEditMode(false); // On quitte le mode édition
+    } catch (err) {
+      console.warn(' Erreur lors de la mise à jour du profil', err);
+    }
+  };
+  // Fonction pour annuler la modification
+  const handleCancel = () => {
+    setFirstName(user.firstName);
+    setLastName(user.lastName);
+    setEditMode(false);
+  };
 
   return (
     <main className="main bg-dark">
@@ -41,21 +62,26 @@ function User() {
           <div className="edit-name-form">
             <input
               type="text"
-              value={user ? user.firstName : ''}
+              value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name"
               className="edit-name-input"
             />
             <input
               type="text"
-              value={user ? user.lastName : ''}
+              value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               placeholder="Last Name"
               className="edit-name-input"
             />
-            <button className="edit-button" disabled>
-              Modifier
-            </button>
+            <div>
+              <button className="edit-button" onClick={handleSave}>
+                Save
+              </button>
+              <button className="edit-button" onClick={handleCancel}>
+                Cancel
+              </button>
+            </div>
           </div>
         )}
       </div>
