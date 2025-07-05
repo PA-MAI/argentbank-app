@@ -18,7 +18,7 @@ function Header() {
     return (
         <nav className="main-nav">
           <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div className="main-nav-logo">
+            <div className="main-nav-logo" onClick={handleLogout}>
               <img src={Logo} className="main-nav-logo-image" alt="Argent Bank Logo" />
               <h1 className="sr-only">Argent Bank</h1>
             </div>

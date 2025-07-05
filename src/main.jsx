@@ -7,7 +7,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import SignIn from './pages/Sign-in'
 import User from './pages/User'
-
+import Error from './pages/Error'
 import { store } from './Redux/store'
 import { Provider } from 'react-redux'
 import PrivateRoute from './utils/PrivateRoute';
@@ -21,12 +21,14 @@ createRoot(document.getElementById('root')).render(
         <Routes> 
           <Route path="/" element={<Accueil />} />
           <Route path="/Login" element={<SignIn />} />
+          <Route path="*" element={<Error />} />
           <Route path="/User" element={
             <PrivateRoute>
               <User />
             </PrivateRoute>
           }
           />
+          
         </Routes>
       <Footer />
       </BrowserRouter>

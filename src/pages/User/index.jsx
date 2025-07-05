@@ -49,7 +49,7 @@ function User() {
       <div className="header">
         <h1>
           Welcome back<br />
-          {user ? `${firstName} ${lastName}` : ''}
+          {user ? `${firstName} ${lastName}` : ''}!
         </h1>
 
         {/* Bouton pour activer le mode édition */}
@@ -60,6 +60,7 @@ function User() {
         {/* Bloc de modification */}
         {editMode && (
           <div className="edit-name-form">
+            <div>
             <input
               type="text"
               value={firstName}
@@ -74,6 +75,7 @@ function User() {
               placeholder="Last Name"
               className="edit-name-input"
             />
+            </div>
             <div>
               <button className="edit-button" onClick={handleSave}>
                 Save
