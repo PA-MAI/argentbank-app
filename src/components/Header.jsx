@@ -12,7 +12,7 @@ function Header() {
   
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/'); // redirection propre vers l’accueil
+    navigate('/'); 
   };
 
     return (

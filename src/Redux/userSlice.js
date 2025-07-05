@@ -6,7 +6,7 @@
 // - la persistance via localStorage (remember me)
 
 import { createSlice } from '@reduxjs/toolkit';
-import api from '../utils/Api';
+
 
 // Récupération des infos de l'utilisateur depuis localStorage si elles existent
 const userInfoFromStorage = JSON.parse(localStorage.getItem('user')) || null;
@@ -40,17 +40,7 @@ const userSlice = createSlice({
   },
 });
 
-export const updateUserProfile = async (token, newData) => {
-    try {
-      const response = await api.put('/user/profile', newData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return response.data;
-    } catch (error) {
-      throw error.response?.data || { message: 'Profile update failed' };
-    }
-};
-  
+
 
 
 // Export des actions pour les utiliser ailleurs (ex: Header, SignIn)

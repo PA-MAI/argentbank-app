@@ -14,7 +14,7 @@ function PrivateRoute({ children }) {
 
   // Si l'utilisateur n'est pas connecté ou s'il n'a pas de token : on bloque l'accès
   if (!user || !user.token) {
-    console.warn(' Accès refusé : utilisateur non connecté');
+    console.warn(' Access denied: user not logged in');
     return <Navigate to="/" />; // Redirection automatique
   }
 

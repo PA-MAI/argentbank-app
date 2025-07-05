@@ -7,6 +7,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import SignIn from './pages/Sign-in'
 import User from './pages/User'
+
 import { store } from './Redux/store'
 import { Provider } from 'react-redux'
 import PrivateRoute from './utils/PrivateRoute';

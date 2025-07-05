@@ -3,26 +3,26 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch} from 'react-redux';
 import '../../styles/css/accueil.css';
 import { updateUserProfile } from '../../utils/Auth'; // Fonction API PUT vers /user/profile
-import { updateUser } from '../../Redux/userSlice'; // Action Redux pour mettre à jour le store
+import { updateUser } from '../../Redux/userSlice'; // Action Redux pour maj le store
 
 function User() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo);
 
-   // État pour afficher ou non le formulaire d’édition
+   // État pour afficher ou non le formulaire 
    // État local des champs d'édition
    const [editMode, setEditMode] = useState(false);
 
-  // Si l'utilisateur n'est pas connecté, on le redirige vers la page d'accueil
+  // Si utilisateur pas connecté, redirection vers la page d'accueil
   useEffect(() => {
     if (!user || !user.token) {
-      console.warn('Redirection sécurisée car user est null');
+      console.warn('Safe redirection because user is null');
       navigate('/');
     }
   }, [user, navigate]);
   
- // Champs contrôlés pour les inputs (préremplis avec les infos actuelles)
+ // Champs contrôlés pour les inputs (préremplis avec nom prenom)
  const [firstName, setFirstName] = useState(user?.firstName || '');
  const [lastName, setLastName] = useState(user?.lastName || '');
   
@@ -32,9 +32,9 @@ function User() {
     try {
       const updated = await updateUserProfile({ firstName, lastName });
       dispatch(updateUser(updated)); // Mise à jour du Redux Store
-      setEditMode(false); // On quitte le mode édition
+      setEditMode(false); //quitte le mode édition
     } catch (err) {
-      console.warn(' Erreur lors de la mise à jour du profil', err);
+      console.warn(' Profile update failed', err);
     }
   };
   // Fonction pour annuler la modification
@@ -57,7 +57,7 @@ function User() {
           Edit Name
         </button>
 
-        {/* Bloc de modification (sans action de mise à jour) */}
+        {/* Bloc de modification */}
         {editMode && (
           <div className="edit-name-form">
             <input
