@@ -11,7 +11,7 @@ function User() {
   const user = useSelector((state) => state.user.userInfo);
 
    // État pour afficher ou non le formulaire 
-   // État local des champs d'édition
+
    const [editMode, setEditMode] = useState(false);
 
   // Si utilisateur pas connecté, redirection vers la page d'accueil

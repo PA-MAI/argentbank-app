@@ -2,7 +2,7 @@ import axios from 'axios';
 
 /**
  * Configuration de l'instance Axios personnalisée.
- * On centralise ici :
+ * centralisation de
  * - l'URL de base
  * - le timeout
  * - les headers par défaut

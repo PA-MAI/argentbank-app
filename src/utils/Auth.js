@@ -4,7 +4,7 @@
 // Utilisation de l'instance axios centralisée de `Api.jsx`.
 
 import api from '../utils/Api';// axios.create()
-
+// fonction de gestion du login
 export const loginUser = async ({ email, password }) => {
   try {
     const response = await api.post('/user/login', { email, password });
@@ -13,7 +13,7 @@ export const loginUser = async ({ email, password }) => {
     throw error.response?.data || { message: 'Login failed' };
   }
 };
-
+// fonction de gestion du token
 export const fetchUserProfile = async (token) => {
   try {
     const response = await api.post('/user/profile', {}, {

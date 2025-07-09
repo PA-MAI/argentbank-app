@@ -62,14 +62,14 @@ function SignIn() {
       <section className="sign-in-content">
       <i className="fa fa-user-circle sign-in-icon"></i>
         <h1>Sign In</h1>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} autoComplete="off">
           <div className="input-wrapper">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input type="password" id="password" autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
           <div className="input-remember">
           <input type="checkbox" id="remember-me" checked={rememberMe}
